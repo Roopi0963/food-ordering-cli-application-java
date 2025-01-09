@@ -15,7 +15,8 @@ public class CustomerRepository {
         this.customersList=csvReader.readCustomerFromCsv();
     }
 
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getCustomersList() {
+
         return customersList;
     }
 }
