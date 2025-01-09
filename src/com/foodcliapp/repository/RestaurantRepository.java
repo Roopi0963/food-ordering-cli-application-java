@@ -10,6 +10,7 @@ public class RestaurantRepository {
 
     private List<Restaurant> restaurantList;
 
+
     public RestaurantRepository(){
         CsvReader csvReader = new CsvReader();
         this.restaurantList=csvReader.readRestaurantFromCsv();
