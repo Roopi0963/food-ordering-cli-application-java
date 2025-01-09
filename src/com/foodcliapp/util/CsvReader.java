@@ -45,6 +45,34 @@ public class CsvReader {
         return dishesList;
     }
 
+    public List<Customer> readCustomerFromCsv(){
+        String CUSTOMER_CSV_PATH = "K:\\\\project\\\\food-ordering-cli-application-java\\\\DATA\\\\customers.csv";
+        String line;
+        List<Customer> customerList=new ArrayList<>();
+        try(BufferedReader br = new BufferedReader(new FileReader(CUSTOMER_CSV_PATH))){
+            String csvSplitBy = ",";
+            br.readLine();
+            while((line=br.readLine()) != null){
+                String[] data = line.split(csvSplitBy);
+                Customer customer=new Customer();
+                customer.setId(data[0]);
+                customer.setName(data[1]);
+                customer.setEmail(data[2]);
+                customer.setPassword(data[3]);
+
+                customerList.add(customer);
+            }
+
+        }catch (IOException e){
+            e.printStackTrace();
+            System.exit(0);
+            System.out.println("File not found");
+        }
+        return customerList;
+    }
+
+
+
 
 
 
