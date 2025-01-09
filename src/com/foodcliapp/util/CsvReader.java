@@ -72,6 +72,35 @@ public class CsvReader {
     }
 
 
+    public List<Restaurant> readRestaurantFromCsv(){
+        String RESTAURANT_CSV_PATH = "K:\\\\project\\\\food-ordering-cli-application-java\\\\DATA\\\\restaurants.csv";
+        String line;
+        List<Restaurant> restaurantList = new ArrayList<>();
+        try(BufferedReader br = new BufferedReader(new FileReader(RESTAURANT_CSV_PATH))){
+            String csvSplitBy=",";
+
+            br.readLine();
+            while((line = br.readLine()) != null){
+                String[] data =line.split(csvSplitBy);
+                Restaurant restaurant = new Restaurant();
+                restaurant.setId(data[0]);
+                restaurant.setName(data[1]);
+                restaurant.setAddress(data[2]);
+                restaurant.setMenu(data[3]);
+                restaurantList.add(restaurant);
+            }
+
+        }catch (IOException e){
+            e.printStackTrace();
+            System.exit(0);
+            System.out.println("File not found");
+        }
+
+        return restaurantList;
+
+    }
+
+
 
 
 
