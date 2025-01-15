@@ -4,15 +4,11 @@ import com.foodcliapp.model.Customer;
 import com.foodcliapp.model.Dish;
 import com.foodcliapp.model.Restaurant;
 
-
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class CsvReader {
 
