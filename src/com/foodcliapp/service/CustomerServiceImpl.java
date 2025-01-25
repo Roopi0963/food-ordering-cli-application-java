@@ -18,10 +18,10 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer save(Customer customer) throws CustomerExistException {
 
         Optional<Customer> customerById = this.customerRepository.findCustomerById(customer.getId());
-        if(customerById.isEmpty())
-            throw new CustomerExistException("Customer is already present"+customer.getId());
+        if(customerById.isPresent())
+            throw new CustomerExistException("Customer is already present : "+customer.getId());
 
-        return this.save(customer);
+        return this.customerRepository.save(customer);
     }
 
 
