@@ -30,7 +30,7 @@ public class CustomerRepository {
     public Optional<Customer> findCustomerById(String id){
         return this.customersList.stream().filter(customer -> customer.getId().equals(id)).findFirst();
     }
-//    public Optional<Customer> findCustomerByEmail(String email){
-//        return this.customersList.stream().filter(customer -> customer.getEmail().equals(email)).findAny();
-//    }
+   public Optional<Customer> findCustomerByEmail(String email){
+        return this.customersList.stream().filter(customer -> customer.getEmail().equals(email)).findAny();
+    }
 }
