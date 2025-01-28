@@ -4,6 +4,7 @@ import com.foodcliapp.model.Restaurant;
 import com.foodcliapp.util.CsvReader;
 
 import java.util.List;
+import java.util.Optional;
 
 public class RestaurantRepository {
 
@@ -25,5 +26,11 @@ public class RestaurantRepository {
         this.restaurantList.add(restaurant);
         return restaurant;
     }
+
+    public Optional<Restaurant> getRestaurantById(String id){
+        return this.restaurantList.stream().filter(restaurant -> restaurant.getId().equals(id)).findFirst();
+    }
+
+
 
 }
