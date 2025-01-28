@@ -19,4 +19,11 @@ public class RestaurantRepository {
     public List<Restaurant> getRestaurantList() {
         return restaurantList;
     }
+
+
+    public Restaurant saveRestaurant(Restaurant restaurant){
+        this.restaurantList.add(restaurant);
+        return restaurant;
+    }
+
 }
