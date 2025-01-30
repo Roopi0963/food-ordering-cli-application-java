@@ -3,7 +3,6 @@ package com.foodcliapp.repository;
 import com.foodcliapp.model.Restaurant;
 import com.foodcliapp.util.CsvReader;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +22,12 @@ public class RestaurantRepository {
     }
 
 
-    public Restaurant saveRestaurant(Restaurant restaurant){
+    public Restaurant save(Restaurant restaurant){
         this.restaurantList.add(restaurant);
         return restaurant;
     }
 
-    public Optional<Restaurant> getRestaurantById(String id){
+    public Optional<Restaurant> findRestaurantById(String id){
         return this.restaurantList.stream().filter(restaurant -> restaurant.getId().equals(id)).findFirst();
     }
 
