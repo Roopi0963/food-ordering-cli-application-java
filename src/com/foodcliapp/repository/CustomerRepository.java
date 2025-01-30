@@ -5,6 +5,7 @@ import com.foodcliapp.util.CsvReader;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class CustomerRepository {
     private List<Customer> customersList;
@@ -33,4 +34,29 @@ public class CustomerRepository {
    public Optional<Customer> findCustomerByEmail(String email){
         return this.customersList.stream().filter(customer -> customer.getEmail().equals(email)).findAny();
     }
+
+    public Customer updateCustomer(Customer customerToBeUpdated){
+        Optional<Customer> updateCustomer = this.customersList.stream().filter(customer -> customer.getId().equals(customerToBeUpdated))
+                .findFirst()
+                .map(customer -> {
+                    customer.setName(customerToBeUpdated.getName())
+                            .setEmail(customerToBeUpdated.getEmail())
+                            .setEmail(customerToBeUpdated.getEmail())
+                            .setPassword(customerToBeUpdated.getPassword());
+                    return customer;
+
+                });
+        return updateCustomer.orElse(null);
+
+    }
+
+    public void deleteCustomer(Customer customer){
+        this.customersList.remove(customer);
+    }
+
+    public Stream<Customer> findByEmailAndPassword(String email, String password){
+        return this.customersList.stream().filter(customer -> customer.getEmail().equalsIgnoreCase(email) && customer.getPassword().equals(password));
+    }
+
+
 }
