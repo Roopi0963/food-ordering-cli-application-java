@@ -6,6 +6,7 @@ import com.foodcliapp.model.Customer;
 import com.foodcliapp.repository.CustomerRepository;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 public class CustomerServiceImpl implements CustomerService {
@@ -18,7 +19,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer save(Customer customer) throws CustomerExistException {
-
         Optional<Customer> customerById = this.customerRepository.findCustomerById(customer.getId());
         if(customerById.isPresent())
             throw new CustomerExistException("Customer is already present : "+customer.getId());
@@ -29,10 +29,51 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getCustomerById(String id) throws CustomerNotFoundException {
         Optional<Customer> customerById = this.customerRepository.findCustomerById(id);
-        if(!customerById.isPresent())
-            throw new CustomerNotFoundException("Customer is not found" + id);
+        if(!customerById.isEmpty())
+            throw new CustomerNotFoundException("Customer is not found with id " + id);
         return customerById.get();
     }
 
+    @Override
+    public List<Customer> getAllCustomers() {
+        return this.customerRepository.getCustomersList();
+    }
 
+    @Override
+    public Customer update(String id) throws CustomerNotFoundException {
+//        Optional<Customer> customerById = this.customerRepository.findCustomerById(customer.getId());
+//        if(customerById.isEmpty())
+//            throw new CustomerNotFoundException("Customer not found with id "+customer.getId());
+//        return this.customerRepository.updateCustomer(customer);
+        return null;
+    }
+
+    @Override
+    public void delete(String id) throws CustomerNotFoundException {
+        Optional<Customer> customerById = this.customerRepository.findCustomerById(id);
+        if(customerById.isEmpty())
+            throw new CustomerNotFoundException("Customer not found with id "+id);
+        this.customerRepository.deleteCustomer(customerById.get());
+
+    }
+
+    @Override
+    public Customer validateCustomerLogin(String email, String password) throws CustomerNotFoundException {
+        Optional<Customer> customerById = this.customerRepository.findCustomerByEmail(email,password);
+        if(customerById.isEmpty())
+            throw new CustomerNotFoundException("Invalid email or password");
+        return customerById.get();
+    }
+
+    @Override
+    public void setCurrentLoggedInCustomer(Customer customer) {
+//        this.currentLoggedInCustomer = customer;
+
+    }
+
+    @Override
+    public Customer getCurrentLoggedInCustomer() {
+//        return this.currentLoggenInCustomer;
+        return null;
+    }
 }
