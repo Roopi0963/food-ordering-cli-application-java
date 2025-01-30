@@ -7,6 +7,7 @@ import com.foodcliapp.model.Customer;
 public interface CustomerService {
     public Customer save(Customer customer) throws CustomerExistException;
     public Customer getCustomerById(String id) throws CustomerNotFoundException;
+    
 
 
 }
