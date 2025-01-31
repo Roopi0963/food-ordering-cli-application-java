@@ -19,40 +19,45 @@ public class Order {
         return id;
     }
 
-    public void setId(String id) {
+    public Order setId(String id) {
         this.id = id;
+        return this;
     }
 
     public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public Order setCustomer(Customer customer) {
         this.customer = customer;
+        return this;
     }
 
     public Restaurant getRestaurant() {
         return restaurant;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
+    public Order setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+        return this;
     }
 
     public List<Dish> getDishes() {
         return dishes;
     }
 
-    public void setDishes(List<Dish> dishes) {
+    public Order setDishes(List<Dish> dishes) {
         this.dishes = dishes;
+        return this;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public Order setPrice(double price) {
         this.price = price;
+        return this;
     }
 
     @Override
