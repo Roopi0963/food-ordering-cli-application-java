@@ -13,7 +13,7 @@ public interface CustomerService {
 
     public List<Customer> getAllCustomers();
 
-    public Customer update(String id) throws CustomerNotFoundException;
+    public Customer update(Customer customer) throws CustomerNotFoundException;
 
     public void delete(String id) throws CustomerNotFoundException;
 
