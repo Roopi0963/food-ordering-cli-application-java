@@ -39,7 +39,11 @@ public class CustomerController {
     }
 
     public Customer updateCustomer(Customer customer) throws  CustomerNotFoundException{
-        return this.customerService.update(String.valueOf(customer));
+        return this.customerService.update(customer);
 
+    }
+
+    public void deleteCustomer(String id) throws  CustomerNotFoundException{
+        this.customerService.delete(id);
     }
 }
