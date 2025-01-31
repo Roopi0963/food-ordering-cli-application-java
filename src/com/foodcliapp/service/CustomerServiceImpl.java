@@ -40,12 +40,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer update(String id) throws CustomerNotFoundException {
-//        Optional<Customer> customerById = this.customerRepository.findCustomerById(customer.getId());
-//        if(customerById.isEmpty())
-//            throw new CustomerNotFoundException("Customer not found with id "+customer.getId());
-//        return this.customerRepository.updateCustomer(customer);
-        return null;
+    public Customer update(Customer customer) throws CustomerNotFoundException {
+        Optional<Customer> customerById = this.customerRepository.findCustomerById(customer.getId());
+        if(customerById.isEmpty())
+            throw new CustomerNotFoundException("Customer not found with id "+customer.getId());
+        return this.customerRepository.updateCustomer(customer);
     }
 
     @Override
@@ -73,7 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getCurrentLoggedInCustomer() {
-//        return this.currentLoggenInCustomer;
+//        return this.currentLoggedInCustomer;
         return null;
     }
 }
