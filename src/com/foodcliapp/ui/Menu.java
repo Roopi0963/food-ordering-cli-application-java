@@ -24,9 +24,9 @@ public class Menu {
         System.out.printf("%-70s %-10s %-70s \n", spaces, menuHeader, spaces);
         printDashLines();
     }
-//    public void printDashLines(){
-//        String dashLines = new String(new char[150]).replace('\0','-');
-//        System.out.println(dashLines);
-//    }
+    public void printDashLines(){
+        String dashLines = new String(new char[150]).replace('\0','-');
+        System.out.println(dashLines);
+    }
 
 }
