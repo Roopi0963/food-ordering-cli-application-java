@@ -1,4 +1,4 @@
-package com.foodcliapp.ui;
+package com.foodcliapp.Factory;
 
 import com.foodcliapp.controller.CustomerController;
 import com.foodcliapp.controller.RestaurantController;
