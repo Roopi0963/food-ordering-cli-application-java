@@ -1,5 +1,6 @@
 package com.foodcliapp.ui;
 
+import com.foodcliapp.Factory.Factory;
 import com.foodcliapp.controller.CustomerController;
 import com.foodcliapp.exceptions.CustomerExistException;
 import com.foodcliapp.model.Customer;
@@ -47,9 +48,11 @@ public class CustomerMenu {
         }catch (CustomerExistException e){
             System.out.println(e.getMessage());
             System.out.println("Customer already exist, Please login using main menu");
-            Menu.displayMainMenu();
+//            Menu.displayMainMenu();
 
 
         }
     }
 }
+
+
