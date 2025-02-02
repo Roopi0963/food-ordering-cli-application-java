@@ -9,6 +9,8 @@ import com.foodcliapp.service.RestaurantServiceImpl;
 
 public class Factory {
 
+    public static CustomerController customerController;
+
     public static CustomerRepository getCustomerRepository(){
         return new CustomerRepository();
     }
