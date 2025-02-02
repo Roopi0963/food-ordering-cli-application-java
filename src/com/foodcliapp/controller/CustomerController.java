@@ -8,7 +8,7 @@ import com.foodcliapp.service.CustomerServiceImpl;
 import java.util.List;
 
 public class CustomerController {
-    private CustomerServiceImpl customerService;
+    private final CustomerServiceImpl customerService;
 
     public CustomerController(CustomerServiceImpl customerService){
         this.customerService=customerService;
