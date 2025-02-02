@@ -1,14 +1,22 @@
 package com.foodcliapp.ui;
 
-import com.foodcliapp.Factory.Factory;
 import com.foodcliapp.controller.CustomerController;
 import com.foodcliapp.exceptions.CustomerExistException;
+import com.foodcliapp.exceptions.CustomerNotFoundException;
 import com.foodcliapp.model.Customer;
 
+import java.util.List;
 import java.util.Scanner;
 
-public class CustomerMenu {
-    public void displayCustomerMenu(){
+import static com.foodcliapp.Factory.Factory.getCustomerController;
+
+public class CustomerMenu extends Menu{
+    private final CustomerController customerController;
+    public CustomerMenu(){
+        this.customerController = getCustomerController();
+    }
+    @Override
+    public  void displayMenu(){
         try{
             Scanner scanner = new Scanner(System.in);
             displayMenuHeader("WELCOME CUSTOMER SECTION");
@@ -25,74 +33,99 @@ public class CustomerMenu {
             switch(input){
                 case 1 -> customerRegisterForm();
                 case 2 -> customerLoginForm();
-//                case 3 -> customerSearchForm();
-//                case 4 -> displayAllCustomers();
+                case 3 -> customerSearchForm();
+                case 4 -> displayAllCustomers();
                 case 5 -> customerUpdateForm();
-//                case 6 -> customerDeleteForm();
+                case 6 -> customerDeleteForm();
                 case 7 -> {
                     System.out.println("Thank You.See you again....");
-                    displayCustomerMenu();
+                    super.displayMenu();
                 }
                 default -> System.out.println("Invalid input. Please enter valid input from(1-7) ");
 
             }
         } catch (Exception e) {
             System.out.println("Some internal error occurred.Please try again.....! ");
-            displayCustomerMenu();
+            displayMenu();
         }
 
     }
 
 
 
-    public static void customerRegisterForm(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please register using following details");
-        System.out.println("Please enter Id");
-        String id = scanner.nextLine();
-        System.out.println("Enter Name");
-        String name = scanner.nextLine();
-        System.out.println("Enter mail");
-        String email = scanner.nextLine();
-        System.out.println("enter password");
-        String password = scanner.nextLine();
-
-        Customer customer = new Customer();
-        customer.setId(id);
-        customer.setName(name);
-        customer.setEmail(email);
-        customer.setPassword(password);
-
-        CustomerController customerController = Factory.getCustomerController();
-
+    public void customerRegisterForm(){
         try{
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please register using following details");
+            System.out.println("Please enter Id");
+            String id = scanner.nextLine();
+            System.out.println("Enter Name");
+            String name = scanner.nextLine();
+            System.out.println("Enter mail");
+            String email = scanner.nextLine();
+            System.out.println("enter password");
+            String password = scanner.nextLine();
+
+            Customer customer = new Customer();
+            customer.setId(id)
+                    .setName(name)
+                    .setEmail(email)
+                    .setPassword(password);
             Customer savedCustomer = customerController.save(customer);
-            if(savedCustomer != null){
-                System.out.println("Customer registration is successful ");
-                System.out.println("Details : ");
-                System.out.println("Id : "+ customer.getId());
-                System.out.println("Name : "+customer.getName());
-                System.out.println("Email : "+customer.getEmail());
-                System.out.println("Password : "+customer.getPassword());
-
-
-            }
-            else{
-                System.out.println("Some internal error occurred, Please try again ");
-                customerRegisterForm();
-            }
+            System.out.println("Customer Registration successful.");
+            
 
         }catch (CustomerExistException e){
             System.out.println(e.getMessage());
             System.out.println("Customer already exist, Please login using main menu");
-//            Menu.displayMainMenu();
-
-
+            customerRegisterForm();
         }
     }
+
     public void customerLoginForm(){
+        try{
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please enter the following details : \n");
+            System.out.println("Enter E-Mail : ");
+            String email = scanner.nextLine();
+            System.out.println("Enter password : ");
+            String password = scanner.nextLine();
+            Customer existingCustomer = customerController.validateCustomerLogin(email,password);
+            System.out.println("Login Successful : ");
+            System.out.println("Welcome Mr. "+existingCustomer.getName());
+        }catch (CustomerNotFoundException e){
+            System.out.println(e.getMessage());
+            displayMenu();
+        }
+
 
     }
+
+    public void customerSearchForm(){
+        try{
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please enter the following details to search the customer : \n");
+            System.out.println("Enter Id : ");
+            String id = scanner.nextLine();
+            Customer customer = customerController.getCustomerById(id);
+//            displayCustomerDetails(customer);
+        }catch(CustomerNotFoundException e){
+            System.out.println(e.getMessage());
+            displayMenu();
+        }
+    }
+
+    public void displayAllCustomers(){
+        List<Customer> customersList =  this.customerController.getCustomersList();
+        String dashesLine = new String(new char[150]).replace('\0', '-');
+        displayMenuHeader("Customers");
+        System.out.printf("%-10s %-30s %-80s %-30s\n", "Id", "Name", "E-mail", "Password");
+        System.out.println(dashesLine);
+        customersList.forEach(customer -> {
+            System.out.printf("%-10s %-30s %-80s %-30s\n", customer.getId(), customer.getName(), customer.getEmail(), "*".repeat(customer.getPassword().length()));
+        });
+    }
+
 
     public void customerUpdateForm(){
         try{
@@ -111,11 +144,25 @@ public class CustomerMenu {
                     .setName(name)
                     .setEmail(email)
                     .setPassword(password);
-            Customer updateCustomer = Factory.customerController.updateCustomer(customer);
+            Customer updateCustomer = customerController.updateCustomer(customer);
             System.out.println("Customer Updated Successfully.");
-//            displaypalyCustomerDetails(updateCustomer);
+//            displayCustomerDetails(updateCustomer);
         } catch (Exception e) {
             System.out.println("Please");
+        }
+
+    }
+    public void customerDeleteForm(){
+        try{
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please enter the following details to delete Customer : \n");
+            System.out.println("Enter Id : ");
+            String id = scanner.nextLine();
+            customerController.deleteCustomer(id);
+            System.out.println("Customer deleted Successfully.");
+        }catch(CustomerNotFoundException e){
+            System.out.println(e.getMessage());
+            displayMenu();
         }
 
     }
