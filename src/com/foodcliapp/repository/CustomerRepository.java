@@ -13,7 +13,6 @@ public class CustomerRepository {
 
     public CustomerRepository(){
         CsvReader csvReader = new CsvReader();
-//        csvReader.readCustomerFromCsv();
         this.customersList=csvReader.readCustomerFromCsv();
     }
 
@@ -54,8 +53,8 @@ public class CustomerRepository {
         this.customersList.remove(customer);
     }
 
-    public Stream<Customer> findByEmailAndPassword(String email, String password){
-        return this.customersList.stream().filter(customer -> customer.getEmail().equalsIgnoreCase(email) && customer.getPassword().equals(password));
+    public Optional<Customer> findByEmailAndPassword(String email, String password){
+        return this.customersList.stream().filter(customer -> customer.getEmail().equalsIgnoreCase(email) && customer.getPassword().equals(password)).findFirst();
     }
 
 
