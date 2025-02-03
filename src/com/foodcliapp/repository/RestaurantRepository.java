@@ -31,8 +31,17 @@ public class RestaurantRepository {
         return this.restaurantList.stream().filter(restaurant -> restaurant.getId().equals(id)).findFirst();
     }
 
-    public Optional<Restaurant> updateRestaurant(Restaurant restaurantToBeUpdated){
-        return null;
+    public Restaurant updateRestaurant(Restaurant restaurantToBeUpdated){
+        Optional<Restaurant> updateRestaurant = this.restaurantList.stream().filter(restaurant -> restaurant.getId().equals(restaurantToBeUpdated))
+                .findFirst()
+                .map(restaurant -> {
+                    restaurant.setId(restaurantToBeUpdated.getId())
+                            .setName(restaurantToBeUpdated.getName())
+                            .setAddress(restaurantToBeUpdated.getAddress())
+                            .setMenu(restaurantToBeUpdated.getMenu());
+                    return restaurantToBeUpdated;
+                });
+        return updateRestaurant.orElse(null);
     }
     public void deleteRestaurant(Restaurant restaurant){
         this.restaurantList.remove(restaurant);
