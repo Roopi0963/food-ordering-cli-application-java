@@ -5,7 +5,6 @@ import com.foodcliapp.util.CsvReader;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class CustomerRepository {
     private List<Customer> customersList;
