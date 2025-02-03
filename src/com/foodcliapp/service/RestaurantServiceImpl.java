@@ -1,8 +1,11 @@
 package com.foodcliapp.service;
 
+import com.foodcliapp.exceptions.DishNotFoundException;
 import com.foodcliapp.exceptions.RestaurantAlreadyExistsException;
 import com.foodcliapp.exceptions.RestaurantNotFoundException;
+import com.foodcliapp.model.Dish;
 import com.foodcliapp.model.Restaurant;
+import com.foodcliapp.repository.DishRepository;
 import com.foodcliapp.repository.RestaurantRepository;
 
 import java.util.List;
@@ -11,6 +14,8 @@ import java.util.Optional;
 public class RestaurantServiceImpl implements RestaurantService{
 
     private final RestaurantRepository restaurantRepository;
+    private DishRepository dishRepository;
+
 
 
     public RestaurantServiceImpl(RestaurantRepository restaurantRepository) {
@@ -50,4 +55,11 @@ public class RestaurantServiceImpl implements RestaurantService{
     public void deleteRestaurant(String id) throws RestaurantNotFoundException {
 
     }
+
+    @Override
+    public List<Dish> getDishItems(String id) throws RestaurantNotFoundException, DishNotFoundException {
+        return List.of();
+    }
+
+
 }
