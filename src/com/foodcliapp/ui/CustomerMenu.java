@@ -73,11 +73,15 @@ public class CustomerMenu extends Menu{
                     .setPassword(password);
             Customer savedCustomer = customerController.save(customer);
             System.out.println("Customer Registration successful.");
+            displayCustomerDetails(customer);
             
 
         }catch (CustomerExistException e){
             System.out.println(e.getMessage());
             System.out.println("Customer already exist, Please login using main menu");
+
+        }catch (Exception e){
+            System.out.println("Some internal error occurred");
             customerRegisterForm();
         }
     }
@@ -108,7 +112,7 @@ public class CustomerMenu extends Menu{
             System.out.println("Enter Id : ");
             String id = scanner.nextLine();
             Customer customer = customerController.getCustomerById(id);
-//            displayCustomerDetails(customer);
+            displayCustomerDetails(customer);
         }catch(CustomerNotFoundException e){
             System.out.println(e.getMessage());
             displayMenu();
@@ -146,7 +150,7 @@ public class CustomerMenu extends Menu{
                     .setPassword(password);
             Customer updateCustomer = customerController.updateCustomer(customer);
             System.out.println("Customer Updated Successfully.");
-//            displayCustomerDetails(updateCustomer);
+            displayCustomerDetails(updateCustomer);
         } catch (Exception e) {
             System.out.println("Please");
         }
@@ -165,6 +169,12 @@ public class CustomerMenu extends Menu{
             displayMenu();
         }
 
+    }
+    public void displayCustomerDetails(Customer customer){
+        displayMenuHeader("Customer Details");
+        System.out.printf("%-10s %-30s %-80s %-30s\n", "Id", "Name", "E-mail", "Password");
+        printDashLines();
+        System.out.printf("%-10s %-30s %-80s %-30s\n", customer.getId(), customer.getName(), customer.getEmail(), "*".repeat(customer.getPassword().length()));
     }
 
 
