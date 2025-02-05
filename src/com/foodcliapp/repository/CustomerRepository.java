@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CustomerRepository {
-    private List<Customer> customersList;
+    List<Customer> customersList;
 
 
     public CustomerRepository(){
@@ -16,7 +16,6 @@ public class CustomerRepository {
     }
 
     public List<Customer> getCustomersList() {
-
         return this.customersList;
     }
 
@@ -29,7 +28,7 @@ public class CustomerRepository {
     public Optional<Customer> findCustomerById(String id){
         return this.customersList.stream().filter(customer -> customer.getId().equals(id)).findFirst();
     }
-   public Optional<Customer> findCustomerByEmail(String email, String password){
+   public Optional<Customer> findCustomerByEmail(String email){
         return this.customersList.stream().filter(customer -> customer.getEmail().equals(email)).findAny();
     }
 
@@ -38,7 +37,6 @@ public class CustomerRepository {
                 .findFirst()
                 .map(customer -> {
                     customer.setName(customerToBeUpdated.getName())
-                            .setEmail(customerToBeUpdated.getEmail())
                             .setEmail(customerToBeUpdated.getEmail())
                             .setPassword(customerToBeUpdated.getPassword());
                     return customer;
@@ -52,7 +50,7 @@ public class CustomerRepository {
         this.customersList.remove(customer);
     }
 
-    public Optional<Customer> findByEmailAndPassword(String email, String password){
+    public Optional<Customer> findCustomerByEmailAndPassword(String email, String password){
         return this.customersList.stream().filter(customer -> customer.getEmail().equalsIgnoreCase(email) && customer.getPassword().equals(password)).findFirst();
     }
 
