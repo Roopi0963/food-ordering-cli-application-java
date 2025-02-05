@@ -1,5 +1,6 @@
 package com.foodcliapp.ui;
 
+import com.foodcliapp.Factory.Factory;
 import com.foodcliapp.controller.CustomerController;
 import com.foodcliapp.exceptions.CustomerExistException;
 import com.foodcliapp.exceptions.CustomerNotFoundException;
@@ -8,17 +9,16 @@ import com.foodcliapp.model.Customer;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.foodcliapp.Factory.Factory.getCustomerController;
-
 public class CustomerMenu extends Menu{
     private final CustomerController customerController;
     public CustomerMenu(){
-        this.customerController = getCustomerController();
+        this.customerController = Factory.getCustomerController();
     }
     @Override
     public  void displayMenu(){
         try{
             Scanner scanner = new Scanner(System.in);
+//            displayMenuHeader("WELCOME CUSTOMER SECTION");
             displayMenuHeader("WELCOME CUSTOMER SECTION");
             System.out.println();
             System.out.println("Please select the option !");
@@ -29,6 +29,9 @@ public class CustomerMenu extends Menu{
             System.out.println("5. Update Customer");
             System.out.println("6. Delete Customer");
             System.out.println("7. Exit");
+
+            System.out.println("Please enter your choice (1-7)");
+
             int input= scanner.nextInt();
             switch(input){
                 case 1 -> customerRegisterForm();
@@ -73,7 +76,7 @@ public class CustomerMenu extends Menu{
                     .setPassword(password);
             Customer savedCustomer = customerController.save(customer);
             System.out.println("Customer Registration successful.");
-            displayCustomerDetails(customer);
+            displayCustomerDetails(savedCustomer);
             
 
         }catch (CustomerExistException e){
@@ -122,6 +125,7 @@ public class CustomerMenu extends Menu{
     public void displayAllCustomers(){
         List<Customer> customersList =  this.customerController.getCustomersList();
         String dashesLine = new String(new char[150]).replace('\0', '-');
+//        displayMenuHeader("Customers");
         displayMenuHeader("Customers");
         System.out.printf("%-10s %-30s %-80s %-30s\n", "Id", "Name", "E-mail", "Password");
         System.out.println(dashesLine);
@@ -148,11 +152,15 @@ public class CustomerMenu extends Menu{
                     .setName(name)
                     .setEmail(email)
                     .setPassword(password);
-            Customer updateCustomer = customerController.updateCustomer(customer);
+            Customer updatedCustomer = customerController.updateCustomer(customer);
             System.out.println("Customer Updated Successfully.");
-            displayCustomerDetails(updateCustomer);
-        } catch (Exception e) {
-            System.out.println("Please");
+            displayCustomerDetails(updatedCustomer);
+        }catch (CustomerNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        catch (Exception e) {
+            System.out.println("Some internal error occurred .Please try again !");
+            customerUpdateForm();
         }
 
     }
@@ -171,6 +179,7 @@ public class CustomerMenu extends Menu{
 
     }
     public void displayCustomerDetails(Customer customer){
+//        displayMenuHeader("Customer Details");
         displayMenuHeader("Customer Details");
         System.out.printf("%-10s %-30s %-80s %-30s\n", "Id", "Name", "E-mail", "Password");
         printDashLines();
@@ -178,16 +187,7 @@ public class CustomerMenu extends Menu{
     }
 
 
-    public void displayMenuHeader(String menuHeader){
-        printDashLines();
-        String spaces = new String(new char[70]).replace('\0',' ');
-        System.out.printf("%-70s %-10s %-70s \n", spaces, menuHeader, spaces);
-        printDashLines();
-    }
-    public void printDashLines(){
-        String dashLines = new String(new char[150]).replace('\0','-');
-        System.out.println(dashLines);
-    }
+
 }
 
 
