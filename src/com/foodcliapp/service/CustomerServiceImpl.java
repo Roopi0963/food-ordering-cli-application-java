@@ -5,7 +5,6 @@ import com.foodcliapp.exceptions.CustomerNotFoundException;
 import com.foodcliapp.model.Customer;
 import com.foodcliapp.repository.CustomerRepository;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer validateCustomerLogin(String email, String password) throws CustomerNotFoundException {
-        Optional<Customer> customerById = this.customerRepository.findCustomerByEmail(email,password);
+        Optional<Customer> customerById = this.customerRepository.findCustomerByEmailAndPassword(email,password);
         if(customerById.isEmpty())
             throw new CustomerNotFoundException("Invalid email or password");
         return customerById.get();
