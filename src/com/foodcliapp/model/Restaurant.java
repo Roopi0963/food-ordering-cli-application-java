@@ -1,12 +1,13 @@
 package com.foodcliapp.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Restaurant {
     private String id;
     private String name;
     private String address;
-    private String menu;
+    private List<String> menu;
 
     public Restaurant() {
     }
@@ -38,11 +39,11 @@ public class Restaurant {
         return this;
     }
 
-    public String getMenu() {
+    public List<String> getMenu() {
         return menu;
     }
 
-    public Restaurant setMenu(String menu) {
+    public Restaurant setMenu(List<String> menu) {
         this.menu = menu;
         return this;
     }
