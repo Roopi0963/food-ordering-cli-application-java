@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CsvReader {
@@ -42,7 +43,7 @@ public class CsvReader {
     }
 
     public List<Customer> readCustomerFromCsv(){
-        String CUSTOMER_CSV_PATH = "K:\\\\project\\\\food-ordering-cli-application-java\\\\DATA\\\\customers.csv";
+        String CUSTOMER_CSV_PATH = "K:\\project\\food-ordering-cli-application-java\\DATA\\customers.csv";
         String line;
         List<Customer> customerList=new ArrayList<>();
         try(BufferedReader br = new BufferedReader(new FileReader(CUSTOMER_CSV_PATH))){
@@ -51,18 +52,19 @@ public class CsvReader {
             while((line=br.readLine()) != null){
                 String[] data = line.split(csvSplitBy);
                 Customer customer=new Customer();
-                customer.setId(data[0]);
-                customer.setName(data[1]);
-                customer.setEmail(data[2]);
-                customer.setPassword(data[3]);
+                customer.setId(data[0])
+                        .setName(data[1])
+                        .setEmail(data[2])
+                        .setPassword(data[3]);
 
                 customerList.add(customer);
             }
 
         }catch (IOException e){
             e.printStackTrace();
-            System.exit(0);
             System.out.println("File not found");
+            System.exit(0);
+
         }
         return customerList;
     }
@@ -79,10 +81,10 @@ public class CsvReader {
             while((line = br.readLine()) != null){
                 String[] data =line.split(csvSplitBy);
                 Restaurant restaurant = new Restaurant();
-                restaurant.setId(data[0]);
-                restaurant.setName(data[1]);
-                restaurant.setAddress(data[2]);
-                restaurant.setMenu(data[3]);
+                restaurant.setId(data[0])
+                        .setName(data[1])
+                        .setAddress(data[2])
+                        .setMenu(Arrays.asList(data[3].split(":")));
                 restaurantList.add(restaurant);
             }
 
