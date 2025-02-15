@@ -1,6 +1,7 @@
 package com.foodcliapp.repository;
 
 import com.foodcliapp.model.Customer;
+import com.foodcliapp.util.CSVWriter;
 import com.foodcliapp.util.CsvReader;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Optional;
 public class CustomerRepository {
     List<Customer> customersList;
 
+    private final CSVWriter csvWriter = new CSVWriter();
 
     public CustomerRepository(){
         CsvReader csvReader = new CsvReader();
@@ -21,6 +23,7 @@ public class CustomerRepository {
 
     public Customer save(Customer customer){
         this.customersList.add(customer);
+        csvWriter.writeCustomersToCsv(customersList);
         return customer;
     }
 
@@ -42,12 +45,14 @@ public class CustomerRepository {
                     return customer;
 
                 });
+        csvWriter.writeCustomersToCsv(customersList);
         return updateCustomer.orElse(null);
 
     }
 
     public void deleteCustomer(Customer customer){
         this.customersList.remove(customer);
+        csvWriter.writeCustomersToCsv(customersList);
     }
 
     public Optional<Customer> findCustomerByEmailAndPassword(String email, String password){
