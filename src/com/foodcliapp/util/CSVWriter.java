@@ -1,6 +1,7 @@
 package com.foodcliapp.util;
 
 import com.foodcliapp.model.Customer;
+import com.foodcliapp.model.Restaurant;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -27,7 +28,33 @@ public class CSVWriter {
                 bw.newLine();  // Move to the next line
             }
 
-            System.out.println("Customer data successfully written to CSV.");
+//            System.out.println("Customer data successfully written to CSV.");
+
+        } catch (IOException e) {
+            System.out.println("Error occurred while writing to CSV.");
+            e.printStackTrace();
+        }
+    }
+
+
+    public void writeRestaurantsToCsv(List<Restaurant> restaurantList){
+        String RESTAURANT_CSV_PATH = "K:\\project\\food-ordering-cli-application-java\\DATA\\restaurants.csv";
+        String CSV_HEADER = "restaurantId,name,address,Menu";
+        try( BufferedWriter bw = new BufferedWriter(new FileWriter(RESTAURANT_CSV_PATH))){
+            bw.write(CSV_HEADER);
+
+            bw.newLine();
+
+            for (Restaurant restaurant : restaurantList){
+                bw.write(String.format("%s,%s,%s,%s",
+                        restaurant.getId(),
+                        restaurant.getName(),
+                        restaurant.getAddress(),
+                        restaurant.getMenu()));
+                bw.newLine();
+            }
+
+//            System.out.println("Restaurant data successfully written to CSV.");
 
         } catch (IOException e) {
             System.out.println("Error occurred while writing to CSV.");
