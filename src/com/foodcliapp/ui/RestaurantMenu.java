@@ -157,8 +157,7 @@ public class RestaurantMenu extends Menu{
             String id = scanner.nextLine();
             restaurantController.deleteRestaurant(id);
             System.out.println("Restaurant deleted Successfully.");
-            Restaurant restaurant = this.restaurantController.deleteRestaurant(id);
-            displayRestaurantDetails(restaurant);
+            restaurantController.deleteRestaurant(id);
 
         }
         catch (RestaurantNotFoundException e){
