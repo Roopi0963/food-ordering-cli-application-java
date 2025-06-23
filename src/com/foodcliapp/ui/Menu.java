@@ -2,6 +2,8 @@ package com.foodcliapp.ui;
 
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 public class Menu {
     public Menu() {
     }
@@ -11,7 +13,7 @@ public class Menu {
         try{
             Scanner scanner = new Scanner(System.in);
             while(true){
-                displayMainMenu("WELCOME TO CUSTOMER SECTION");
+                displayMenuHeader("WELCOME TO FOOD ORDERING CLI APP");
                 System.out.println();
                 System.out.println("Please select the option.");
                 System.out.println("-----------------------------");
@@ -25,6 +27,8 @@ public class Menu {
                 int input = scanner.nextInt();
                 switch (input) {
                     case 1 -> new CustomerMenu().displayMenu();
+                    case 2 -> new RestaurantMenu().displayRestaurantMenu();
+                    case 5 -> exit(0);
                 }
 
 
@@ -37,7 +41,7 @@ public class Menu {
 
     }
 
-    public void displayMainMenu(String menuHeader){
+    public void displayMenuHeader(String menuHeader){
         printDashLines();
         String spaces = new String(new char[70]).replace('\0',' ');
         System.out.printf("%-70s %-10s %-70s \n", spaces, menuHeader, spaces);
