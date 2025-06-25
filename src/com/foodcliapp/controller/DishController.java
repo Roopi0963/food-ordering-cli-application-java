@@ -6,6 +6,9 @@ import com.foodcliapp.model.Dish;
 import com.foodcliapp.repository.DishRepository;
 import com.foodcliapp.service.DishServiceImpl;
 
+import java.awt.*;
+import java.util.List;
+
 public class DishController {
     private final DishServiceImpl dishServiceImp;
 
@@ -16,6 +19,14 @@ public class DishController {
 
     public Dish save(Dish dish) throws DishExistException{
         return this.dishServiceImp.save(dish);
+    }
+
+    public List<Dish> getDisesList(){
+        return this.dishServiceImp.dishList();
+    }
+
+    public Dish getDishById(String id) throws DishNotFoundException {
+        return this.dishServiceImp.findDishById(id);
     }
 
     public Dish updateDish(Dish dish) throws DishNotFoundException {
