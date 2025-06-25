@@ -1,5 +1,6 @@
 package com.foodcliapp.ui;
 
+import com.foodcliapp.Factory.Factory;
 import com.foodcliapp.controller.DishController;
 import com.foodcliapp.exceptions.DishExistException;
 import com.foodcliapp.exceptions.DishNotFoundException;
@@ -13,6 +14,11 @@ public class DishMenu extends Menu{
 
     public DishMenu(DishController dishController) {
         this.dishController = dishController;
+    }
+
+    public DishMenu() {
+        this.dishController = Factory.getDishController();
+
     }
 
     public void displayMenu(){

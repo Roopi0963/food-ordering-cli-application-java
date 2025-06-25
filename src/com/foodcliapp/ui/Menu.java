@@ -28,6 +28,7 @@ public class Menu {
                 switch (input) {
                     case 1 -> new CustomerMenu().displayMenu();
                     case 2 -> new RestaurantMenu().displayRestaurantMenu();
+                    case 3 -> new DishMenu().displayMenu();
                     case 5 -> exit(0);
                 }
 
