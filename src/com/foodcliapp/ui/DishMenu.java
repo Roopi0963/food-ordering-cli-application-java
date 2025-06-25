@@ -1,6 +1,9 @@
 package com.foodcliapp.ui;
 
 import com.foodcliapp.controller.DishController;
+import com.foodcliapp.exceptions.DishExistException;
+import com.foodcliapp.exceptions.DishNotFoundException;
+import com.foodcliapp.model.Dish;
 
 import java.util.List;
 import java.util.Scanner;
@@ -54,25 +57,118 @@ public class DishMenu extends Menu{
     }
 
     public void newDishForm(){
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please enter the following details\n");
+            System.out.println("Enter Id");
+            String id = scanner.nextLine();
+            System.out.println("Enter Name");
+            String name = scanner.nextLine();
+            System.out.println("Enter Description");
+            String description = scanner.nextLine();
+            System.out.println("Enter Price");
+            double price = scanner.nextDouble();
+            Dish dish = new Dish();
+            dish.setId(id)
+                    .setName(name)
+                    .setDescription(description)
+                    .setPrice(price);
+
+            Dish savedDish = this.dishController.save(dish);
+            displayDish(savedDish);
+        } catch (DishExistException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Some internal error occurred. Please try again !");
+            newDishForm();
+        }
 
 
     }
 
     public void dishSearchForm(){
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please enter the following details to search for Customer\n");
+            System.out.println("Enter Id");
+            String id = scanner.nextLine();
+            Dish dish = dishController.getDishById(id);
+            displayDish(dish);
+        } catch (DishNotFoundException e) {
+            System.out.println(e.getMessage());
+            displayMenu();
+        }
 
     }
 
     public void displayAllDishes(){
+        List<Dish> dishesList = this.dishController.getDisesList();
+        String dashesLine = new String(new char[150]).replace('\0', '-');
+        displayMenuHeader("Dish Items");
+        System.out.printf("%-10s %-30s %-80s %-10s\n", "Id", "Name", "Description", "Price");
+        System.out.println(dashesLine);
+        dishesList.forEach(dish -> {
+            System.out.printf("%-10s %-30s %-80s %-10s\n", dish.getId(), dish.getName(), dish.getDescription(), String.format("$%.2f", dish.getPrice()));
+        });
 
 
 
     }
 
     public void dishUpdateForm(){
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please Update entering the following details\n");
+            System.out.println("Enter Dish Id");
+            String id = scanner.nextLine();
+            System.out.println("Enter Name");
+            String name = scanner.nextLine();
+            System.out.println("Enter Description");
+            String description = scanner.nextLine();
+            System.out.println("Enter Price");
+            double price = scanner.nextDouble();
+            Dish dish = new Dish();
+            dish.setId(id)
+                    .setName(name)
+                    .setDescription(description)
+                    .setPrice(price);
+
+            Dish updatedDish = dishController.updateDish(dish);
+            System.out.println("Dish Updated Successfully");
+            displayDish(updatedDish);
+
+        } catch (DishNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Some internal error occurred. Please try again !");
+            dishUpdateForm();
+        }
 
     }
 
     public void dishDeleteForm(){
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please enter the following details to delete the Dish\n");
+            System.out.println("Enter Id");
+            String id = scanner.nextLine();
+            dishController.deleteDish(id);
+            System.out.println("Dish Deleted Successfully");
+        } catch (DishNotFoundException e) {
+            System.out.println(e.getMessage());
+            displayMenu();
+        }
+
 
     }
+    public void displayDish(Dish dish) {
+        displayMenuHeader("Dish Details");
+        System.out.printf("%-10s %-30s %-80s %-10s\n", "Id", "Name", "Description", "Price");
+        printDashLines();
+        System.out.printf("%-10s %-30s %-80s %-10s\n", dish.getId(), dish.getName(), dish.getDescription(), String.format("$%.2f", dish.getPrice()));
+
+    }
+
+
+
 }
